@@ -81,7 +81,7 @@ func (repo pgTaskRepo) List(ctx context.Context) (entities.Tasks, error) {
 
 func (repo pgTaskRepo) Create(ctx context.Context, task entities.Task) (int, error) {
 
-	row := repo.conn.QueryRow(ctx, "INSERT INTO tasks (description, created_at) VALUES ($1, $2) RETURNING id", task.Description, task.CreatedAt)
+	row := repo.conn.QueryRow(ctx, "INSERT INTO tasks (description, completed, created_at) VALUES ($1, false,  $2) RETURNING id", task.Description, task.CreatedAt)
 	idx := -1
 
 	if err := row.Scan(&idx); err != nil {
